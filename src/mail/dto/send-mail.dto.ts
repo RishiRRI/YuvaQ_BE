@@ -1,0 +1,13 @@
+// src/mail/dto/send-mail.dto.ts
+import { IsEmail, IsString } from 'class-validator';
+
+export class SendMailDto {
+  @IsEmail()
+  to: string;
+
+  @IsString()
+  subject: string;
+
+  @IsString()
+  message: string;
+}
