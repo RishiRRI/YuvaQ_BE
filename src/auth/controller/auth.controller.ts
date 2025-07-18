@@ -17,19 +17,15 @@ import { AuthGuard } from '@nestjs/passport';
 import { Request } from 'express';
 import { UserService } from '../service/user.service';
 import * as crypto from 'crypto';
-import { MailService } from 'src/mail/mail.service';
 import { CreateUserDto } from '../dto/create-user.dto';
-import { EmailOtpService } from 'src/mail/email-otp/email-otp.service';
-import { PhoneOtpService } from 'src/whatsapp/phone-otp/phone-otp.service';
+
 
 @Controller('/api/auth/')
 export class AuthController {
   constructor(
     private authService: AuthService,
     private readonly usersService: UserService,
-    private readonly mail: MailService,
-    private readonly emailOtp: EmailOtpService,
-    private readonly phoneOtp: PhoneOtpService,
+
   ) {}
 
   @HttpCode(HttpStatus.OK)
@@ -38,43 +34,43 @@ export class AuthController {
     return this.authService.signIn(signInDto.email, signInDto.password);
   }
 
-  @Post('otp/send-email')
-  async sendOtp(@Body('email') email: string) {
-    await this.emailOtp.sendOtp(email);
-    return { success: true, message: 'OTP sent' };
-  }
+  // @Post('otp/send-email')
+  // async sendOtp(@Body('email') email: string) {
+  //   await this.emailOtp.sendOtp(email);
+  //   return { success: true, message: 'OTP sent' };
+  // }
 
-  @Post('otp/verify-email')
-  async verifyEmailOtp(@Body() body: { email: string; code: string }) {
-    const signupToken = await this.emailOtp.verifyOtp(body.email, body.code);
-    return { success: true, signupToken };
-  }
+  // @Post('otp/verify-email')
+  // async verifyEmailOtp(@Body() body: { email: string; code: string }) {
+  //   const signupToken = await this.emailOtp.verifyOtp(body.email, body.code);
+  //   return { success: true, signupToken };
+  // }
 
-  @Post('otp/send-phone')
-  async sendPhoneOtp(@Body('phoneNumber') phoneNumber: string) {
-    await this.phoneOtp.sendOtp(phoneNumber);
-    return { success: true, message: 'Phone OTP sent via WhatsApp' };
-  }
+  // @Post('otp/send-phone')
+  // async sendPhoneOtp(@Body('phoneNumber') phoneNumber: string) {
+  //   await this.phoneOtp.sendOtp(phoneNumber);
+  //   return { success: true, message: 'Phone OTP sent via WhatsApp' };
+  // }
 
-  @Post('otp/verify-phone')
-  async verifyPhoneOtp(@Body() body: { phoneNumber: string; code: string }) {
-    await this.phoneOtp.verifyOtp(body.phoneNumber, body.code);
-    return { success: true, message: 'Phone number verified' };
-  }
+  // @Post('otp/verify-phone')
+  // async verifyPhoneOtp(@Body() body: { phoneNumber: string; code: string }) {
+  //   await this.phoneOtp.verifyOtp(body.phoneNumber, body.code);
+  //   return { success: true, message: 'Phone number verified' };
+  // }
 
-  @Post('register')
-  async register(
-    @Body('signupToken') signupToken: string,
-    @Body() dto: CreateUserDto,
-  ) {
-    const email = await this.emailOtp.assertEmailVerified(signupToken);
+  // @Post('register')
+  // async register(
+  //   @Body('signupToken') signupToken: string,
+  //   @Body() dto: CreateUserDto,
+  // ) {
+  //   const email = await this.emailOtp.assertEmailVerified(signupToken);
 
-    dto.email = email;
-    dto.emailVerified = true;
-    dto.phoneNumberVerified = true;
-    const user = await this.authService.create(dto);
-    return { success: true, user };
-  }
+  //   dto.email = email;
+  //   dto.emailVerified = true;
+  //   dto.phoneNumberVerified = true;
+  //   const user = await this.authService.create(dto);
+  //   return { success: true, user };
+  // }
 
   @UseGuards(AuthGuard())
   @Get('profile')

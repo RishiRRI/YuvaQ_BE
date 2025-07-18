@@ -8,7 +8,6 @@ const bcrypt = require('bcryptjs');
 import * as crypto from 'crypto';
 
 import { ChangePasswordDto } from '../dto/change-password-dto';
-import { MailService } from 'src/mail/mail.service';
 import { UpdateGoogleTokensDto } from '../dto/update-googleTokens.dto';
 
 @Injectable()
@@ -16,7 +15,7 @@ export class UserService {
   constructor(
     @InjectModel(User.name, 'Yuva')
     private userModel: Model<User>,
-    private mail: MailService,
+    // private mail: MailService,
   ) {}
 
   async create(createUserDto: CreateUserDto): Promise<User> {

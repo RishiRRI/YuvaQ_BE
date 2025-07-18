@@ -10,10 +10,7 @@ import { UserController } from './controller/user.controller';
 import { ConfigService } from '@nestjs/config';
 import { UserService } from './service/user.service';
 
-import { MailModule } from '../mail/mail.module';
-import { EmailOtpModule } from '../mail/email-otp/email-otp.module';
-import { WhatsAppModule } from 'src/whatsapp/whatsapp.module';
-import { PhoneOtpModule } from 'src/whatsapp/phone-otp/phone-otp.module';
+
 
 @Module({
   imports: [
@@ -30,10 +27,7 @@ import { PhoneOtpModule } from 'src/whatsapp/phone-otp/phone-otp.module';
       'Yuva',
     ),
 
-    MailModule,
-    EmailOtpModule,
-    WhatsAppModule,
-    PhoneOtpModule,
+
   ],
   controllers: [AuthController, UserController],
   providers: [AuthService, UserService, JwtStrategy],

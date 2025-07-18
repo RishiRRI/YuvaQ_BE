@@ -8,11 +8,9 @@ const bcrypt = require('bcryptjs');
 import { UserService } from './user.service';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { MailService } from 'src/mail/mail.service';
 import { CreateUserDto } from '../dto/create-user.dto';
 import { User } from '../schemas/user.schema';
 import * as crypto from 'crypto';
-import { WhatsAppService } from 'src/whatsapp/whatsapp.service';
 
 @Injectable()
 export class AuthService {
@@ -21,7 +19,7 @@ export class AuthService {
     private jwtService: JwtService,
     @InjectModel(User.name, 'Yuva')
     private userModel: Model<User>,
-    private mail: MailService,
+    // private mail: MailService,
   ) {}
 
   async create(createUserDto: CreateUserDto): Promise<User> {
