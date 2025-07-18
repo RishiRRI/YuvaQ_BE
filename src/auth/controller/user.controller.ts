@@ -20,8 +20,9 @@ export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Post('normalRegister')
-  create(@Body() createUserDto: CreateUserDto) {
-    // console.log(createUserDto);
+  create(@Body() createUserDto: CreateUserDto, @Req() req: Request) {
+    console.log('Headers:', req.headers);
+    console.log('Payload:', createUserDto);
     return this.userService.create(createUserDto);
   }
 
@@ -34,7 +35,7 @@ export class UserController {
   async findById(@Param('id') id: string): Promise<User> {
     return this.userService.findOne(id);
   }
-  
+
   @Get('findByUserId/:userId')
   async findByUserId(@Param('userId') userId: string): Promise<User | null> {
     return this.userService.findByUserId(userId);
