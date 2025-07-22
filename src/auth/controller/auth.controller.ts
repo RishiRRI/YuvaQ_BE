@@ -19,13 +19,11 @@ import { UserService } from '../service/user.service';
 import * as crypto from 'crypto';
 import { CreateUserDto } from '../dto/create-user.dto';
 
-
 @Controller('/api/auth/')
 export class AuthController {
   constructor(
     private authService: AuthService,
     private readonly usersService: UserService,
-
   ) {}
 
   @HttpCode(HttpStatus.OK)
